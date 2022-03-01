@@ -1,8 +1,13 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <div class="container">
-    <Header title="Task Trackerd"/>
-    <Tasks @toggle-reminder="toggleReminder()" @delete-task="deleteTask()" :tasks="tasks" />
+    <Header title="Task Trackerd" @btn-click="toggleAddTask" :showAddTask="showAddTask" />
+
+    <div v-if="showAddTask">
+      <AddTask @add-task="addTask" />
+    </div>
+
+    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
   </div>
 </template>
 
@@ -10,28 +15,39 @@
 
 import Header from './components/Header.vue'
 import Tasks from './components/Tasks.vue'
+import AddTask from './components/AddTask.vue'
+
 export default {
   name: 'App',
   components: {
     Header,
-    Tasks
+    Tasks,
+    AddTask
   },
   data() {
     return {
-      tasks:[]
+      tasks:[],
+      showAddTask:false
     }
   },
   methods: {
     deleteTask(id){
+      console.log(id);
       if(confirm('Are you sure?')){
-        this.tasks = this.tasks.filter((task)=>{
-          task.id !==id
-        })
-        console.log(this.tasks);
+        this.tasks = this.tasks.filter((task)=> task.id !=id)
+        console.log(this.tasks );
       }
     },
     toggleReminder(id){
-      console.log(id)
+      console.log("clic",id)
+      this.tasks = this.tasks.map((task)=> task.id === id ? {...task,reminder:!task.reminder} : task)
+    },
+    addTask(task){
+      console.log(task);
+      this.tasks = [...this.tasks,task]
+    },
+    toggleAddTask(){
+      this.showAddTask = !this.showAddTask
     }
   },
   created() {
@@ -82,7 +98,7 @@ export default {
   font-weight: bold;
   padding:10px;
   border:1px solid #235B0C ;
-  color: #FBFCFC ;
+  color: black;
   
 }
 
@@ -90,7 +106,7 @@ export default {
   cursor: pointer;
   padding:10px;
   border:1px solid #235B0C ;
-  color: #FBFCFC ;
+  color: black ;
 }
 
 
