@@ -1,79 +1,32 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <div class="container">
-    <Header title="Task Trackerd" @btn-click="toggleAddTask" :showAddTask="showAddTask" />
-
-    <div v-if="showAddTask">
-      <AddTask @add-task="addTask" />
-    </div>
-
-    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link> |
+     <router-link to="/jobs">Jobs</router-link> |
   </div>
+  <button @click="redirect" >Redirect</button>
+  <button @click="back">Go back</button>
+  <button @click="forward">Go forward</button>
+  <router-view></router-view>
 </template>
 
 <script>
-
-import Header from './components/Header.vue'
-import Tasks from './components/Tasks.vue'
-import AddTask from './components/AddTask.vue'
-
 export default {
   name: 'App',
-  components: {
-    Header,
-    Tasks,
-    AddTask
-  },
-  data() {
-    return {
-      tasks:[],
-      showAddTask:false
-    }
-  },
   methods: {
-    deleteTask(id){
-      console.log(id);
-      if(confirm('Are you sure?')){
-        this.tasks = this.tasks.filter((task)=> task.id !=id)
-        console.log(this.tasks );
-      }
+    redirect(){
+     this.$router.push({
+       name:'About'
+     })
     },
-    toggleReminder(id){
-      console.log("clic",id)
-      this.tasks = this.tasks.map((task)=> task.id === id ? {...task,reminder:!task.reminder} : task)
+    back(){
+      this.$router.go(-1)
     },
-    addTask(task){
-      console.log(task);
-      this.tasks = [...this.tasks,task]
-    },
-    toggleAddTask(){
-      this.showAddTask = !this.showAddTask
+    forward(){
+      this.$router.go(1)
     }
   },
-  created() {
-    this.tasks = [
-      {
-        id:1,
-        text:'Doctors Appointment',
-        day:'March 1st at 2:30pm',
-        reminder:true
-      },
-      {
-        id:2,
-        text:'Meeting school',
-        day:'March 3 at 2:30pm',
-        reminder:true
-      }
-      ,
-      {
-        id:3,
-        text:'Foof Shooping',
-        day:'March 3 at 11:00am',
-        reminder:false
-      }
-    ]
-  },
-
 }
 
 </script>

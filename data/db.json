@@ -1,0 +1,12 @@
+{
+    "jobs":[
+        {"title":"Web Developer","id":"1","details":"lorem"},
+        {"title":"Devops","id":"2","details":"lorem"},
+        {"title":"UX Design","id":"3","details":"lorem"}
+    ],
+    "blogs":[
+        {"title":"new site design","id":"1"},
+        {"title":"tech party","id":"2"},
+        {"title":"Developers","id":"3"}
+    ]
+}
